@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- 
+    推土机规控系统测试启动文件
+    
+    使用方法:
+    roslaunch qt_app test_system.launch
+    
+    这将启动:
+    1. decision_node - 决策系统
+    2. moldboard_node - 铲刀控制器
+    3. qt_app_node - 测试节点 (发布模拟数据并验证输出)
+    -->
+    
+    <!-- 决策节点 -->
+    <node name="decision_node" pkg="qt_app" type="decision_node" output="screen">
+        <param name="rate" value="100"/>
+    </node>
+    
+    <!-- 铲刀控制节点 -->
+    <node name="moldboard_node" pkg="qt_app" type="moldboard_node" output="screen">
+        <param name="rate" value="50"/>
+    </node>
+    
+    <!-- 测试节点 (延迟2秒启动,等待其他节点就绪) -->
+    <node name="qt_app_test_node" pkg="qt_app" type="qt_app_node" output="screen" 
+          launch-prefix="bash -c 'sleep 2; exec $0 $@'">
+    </node>
+    
+</launch>

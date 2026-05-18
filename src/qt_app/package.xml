@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>qt_app</name>
+  <version>1.0.0</version>
+  <description>推土机无人驾驶规控系统 (Bulldozer Unmanned Control System)</description>
+  
+  <maintainer email="dev@example.com">Developer</maintainer>
+  <license>BSD</license>
+  
+  <!-- 构建工具 -->
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <!-- 构建依赖 -->
+  <build_depend>roscpp</build_depend>
+  <build_depend>pcl_ros</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>rviz</build_depend>
+  
+  <!-- 导出依赖 -->
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>pcl_ros</build_export_depend>
+  <build_export_depend>sensor_msgs</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>nav_msgs</build_export_depend>
+  <build_export_depend>tf</build_export_depend>
+  
+  <!-- 运行依赖 -->
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>pcl_ros</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  
+  <export></export>
+</package>

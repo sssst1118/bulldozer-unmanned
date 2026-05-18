@@ -1,0 +1,29 @@
+bool Lidar1_state
+bool Lidar2_state  
+bool Lidar3_state 
+bool Lidar4_state  
+bool Lidar5_state  
+bool Lidar6_state  
+bool Camera1_state 
+bool Camera2_state 
+bool Camera3_state 
+bool Camera4_state 
+bool Camera5_state 
+bool chassis_X_Angle_state 
+bool chassis_Y_Angle_state
+bool Bucket_Real_Angle_X_state 
+bool Bucket_Real_Angle_Y_state 
+bool Arm_Real_Angle_X_state 
+bool Arm_Real_Angle_Y_state 
+bool Boom_Real_Angle_X_state 
+bool Boom_Real_Angle_Y_state 
+bool Swing_Real_Angle_X_state 
+bool Swing_Real_Angle_Y_state 
+bool LLA_point_X
+bool LLA_point_Y
+bool LLA_point_Z
+bool Angle_Heading 
+bool IMU_state 
+uint8 work_state
+
+

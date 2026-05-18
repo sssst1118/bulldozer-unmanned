@@ -1,0 +1,8 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+    <file alias="img/logo.png">img/logo.png</file>
+    <file alias="img/app_icon.png">img/app_icon.png</file>
+    <file alias="img/bulldozer_top.png">img/bulldozer_top.png</file>
+    <file alias="img/daolu.gif">img/daolu.gif</file>
+</qresource>
+</RCC>

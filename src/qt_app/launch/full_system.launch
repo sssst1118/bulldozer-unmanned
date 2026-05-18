@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- 
+    ============================================================================
+    推土机无人驾驶规控系统 - 完整启动文件
+    版本: V1
+    ============================================================================
+    
+    使用方法:
+        roslaunch qt_app full_system.launch
+        roslaunch qt_app full_system.launch enable_gui:=false   # 无GUI模式
+        roslaunch qt_app full_system.launch can_device:=can1    # 指定CAN设备
+    
+    节点列表:
+        1. can_to_ros_node    - CAN数据接收，发布ROS话题
+        2. ros_to_can_node    - ROS话题转CAN发送 (含模式切换)
+        3. decision_node      - 决策系统 (100Hz)
+        4. control_node       - 运动控制器 (100Hz)
+        5. moldboard_node     - 铲刀控制器 (50Hz)
+        6. qt_app_node        - 主应用节点
+    
+    数据流:
+        感知层 → can_to_ros → decision_node → moldboard_node
+                                    ↓
+                            control_node → ros_to_can → 执行层
+    -->
+
+    <!-- ==================== 启动参数 ==================== -->
+    <!-- 是否启用GUI -->
+    <arg name="enable_gui" default="true"/>
+    
+    <!-- 是否显示日志到屏幕 -->
+    <arg name="output" default="screen"/>
+    
+    <!-- 节点启动延迟(秒)，确保依赖节点先启动 -->
+
+    <!-- ==================== CAN通信层 ==================== -->
+    <!-- CAN接收节点: 解析CAN数据，发布ROS话题 (can0=RTK/IMU, can1=VCU/发动机) -->
+    <node name="can_to_ros_node" pkg="qt_app" type="can_to_ros_node" 
+          output="$(arg output)" respawn="true" respawn_delay="2">
+    </node>
+    
+    <!-- CAN发送节点: 订阅ROS话题，发送CAN指令 (can1, 含模式切换) -->
+    <node name="ros_to_can_node" pkg="qt_app" type="ros_to_can_node" 
+          output="$(arg output)" respawn="true" respawn_delay="2">
+    </node>
+
+    <!-- ==================== 规控核心层 ==================== -->
+    <!-- 决策系统节点: 路径规划、状态机、空间判断、过载检测 (100Hz) -->
+    <node name="decision_node" pkg="qt_app" type="decision_node" 
+          output="$(arg output)" respawn="true" respawn_delay="2">
+        <!-- 路径参数默认值 (可通过控制台运行时修改) -->
+        <param name="path/push_length"  value="20.0"/>
+        <param name="path/map_width"    value="20.0"/>
+        <param name="path/blade_width"  value="4.2"/>
+        <param name="path/heading"      value="0.0"/>
+        <param name="path/v_push"       value="0.5"/>
+        <param name="path/v_reverse"    value="0.8"/>
+        <param name="path/omega_rotate" value="10.0"/>
+        <param name="path/x_back_set"   value="3.0"/>
+        <param name="path/shift_angle"  value="12.0"/>
+        <param name="path/num_columns"  value="5"/>
+        <param name="path/passes_per_col" value="1"/>
+        <param name="path/mode"         value="0"/>
+        <param name="path/position_tolerance" value="0.3"/>
+        <param name="path/theta_tolerance"    value="5.0"/>
+    </node>
+    
+    <!-- 运动控制节点: 卡尔曼滤波、TD、PID控制 (100Hz) -->
+    <node name="control_node" pkg="qt_app" type="control_node" 
+          output="$(arg output)" respawn="true" respawn_delay="2">
+    </node>
+    
+    <!-- 铲刀控制节点: 铲刀位姿计算、高度控制 (50Hz) -->
+    <node name="moldboard_node" pkg="qt_app" type="moldboard_node" 
+          output="$(arg output)" respawn="true" respawn_delay="2">
+    </node>
+
+    <!-- 主应用节点 -->
+    <node name="qt_app_node" pkg="qt_app" type="qt_app_node" 
+          output="$(arg output)" respawn="true" respawn_delay="2">
+    </node>
+
+</launch>
